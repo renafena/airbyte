@@ -1226,6 +1226,7 @@ definitions:
             stream: "#/definitions/issues_stream"
             parent_key: "id"
             partition_field: "issue_id"
+            incremental_dependency: true
     transformations:
       - type: AddFields
         fields:
@@ -1250,6 +1251,7 @@ definitions:
             stream: "#/definitions/issues_stream"
             parent_key: "id"
             partition_field: "issue_id"
+            incremental_dependency: true
     transformations:
       - type: AddFields
         fields:
