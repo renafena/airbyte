@@ -49,7 +49,7 @@ public class PostgresUtils {
   public static final Duration DEFAULT_SUBSEQUENT_RECORD_WAIT_TIME = Duration.ofMinutes(1);
 
   private static final int MIN_QUEUE_SIZE = 1000;
-  private static final int MAX_QUEUE_SIZE = 10000;
+  private static final int MAX_QUEUE_SIZE = 30000;
 
   private static final String DROP_AGGREGATE_IF_EXISTS_STATEMENT = "DROP aggregate IF EXISTS EPHEMERAL_HEARTBEAT(float4)";
   private static final String CREATE_AGGREGATE_STATEMENT = "CREATE AGGREGATE EPHEMERAL_HEARTBEAT(float4) (SFUNC = float4pl, STYPE = float4)";
