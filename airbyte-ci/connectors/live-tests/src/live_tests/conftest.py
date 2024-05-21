@@ -12,7 +12,7 @@ from typing import TYPE_CHECKING, Optional
 
 import dagger
 import pytest
-from airbyte_protocol.models import ConfiguredAirbyteCatalog  # type: ignore
+from airbyte_protocol.models import AirbyteCatalog, AirbyteStateMessage, ConfiguredAirbyteCatalog  # type: ignore
 from connection_retriever.audit_logging import get_user_email  # type: ignore
 from connection_retriever.retrieval import ConnectionNotFoundError, NotPermittedError  # type: ignore
 from live_tests.commons.connection_objects_retrieval import ConnectionObject, get_connection_objects
@@ -30,10 +30,11 @@ from live_tests.commons.models import (
 from live_tests.commons.secret_access import get_airbyte_api_key
 from live_tests.commons.segment_tracking import track_usage
 from live_tests.commons.utils import build_connection_url, clean_up_artifacts
-from live_tests.regression_tests import stash_keys
+from live_tests import stash_keys
+from live_tests.utils import get_catalog
 from rich.prompt import Confirm, Prompt
 
-from .report import Report, ReportState
+from live_tests.report import Report, ReportState
 
 if TYPE_CHECKING:
     from _pytest.config import Config
@@ -42,7 +43,7 @@ if TYPE_CHECKING:
     from pytest_sugar import SugarTerminalReporter  # type: ignore
 
 ## CONSTS
-LOGGER = logging.getLogger("regression_tests")
+LOGGER = logging.getLogger("regression")
 MAIN_OUTPUT_DIRECTORY = Path("/tmp/regression_tests_artifacts")
 
 # It's used by Dagger and its very verbose
@@ -352,6 +353,11 @@ def configured_catalog(connection_objects: ConnectionObjects, selected_streams: 
         pytest.skip("Catalog is not provided. The catalog fixture can't be used.")
     assert connection_objects.configured_catalog is not None
     return connection_objects.configured_catalog
+
+
+@pytest.fixture(scope="session")
+def target_discovered_catalog(discover_target_execution_result: ExecutionResult) -> AirbyteCatalog:
+    return get_catalog(discover_target_execution_result)
 
 
 @pytest.fixture(scope="session", autouse=True)
