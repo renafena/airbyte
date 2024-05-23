@@ -40,8 +40,10 @@ interface StorageOperation<Data> {
      *
      * [AbstractStreamOperation] is responsible for orchestrating the stages so that the temp stage
      * always contains exactly one generation.
+     *
+     * @return The generation ID of a record in the stage, or `null` if the stage is empty.
      */
-    fun getStageGeneration(streamId: StreamId, suffix: String): Long
+    fun getStageGeneration(streamId: StreamId, suffix: String): Long?
 
     /** Delete previously staged data, using deterministic information from streamId. */
     fun cleanupStage(streamId: StreamId)

@@ -75,6 +75,7 @@ class DefaultSyncOperationTest {
                 initialRawTableStatus =
                     InitialRawTableStatus(
                         rawTableExists = true,
+                        tempRawTableExists = false,
                         hasUnprocessedRecords = false,
                         maxProcessedTimestamp = Optional.empty(),
                     ),
@@ -172,6 +173,7 @@ class DefaultSyncOperationTest {
                 initialRawTableStatus =
                     InitialRawTableStatus(
                         rawTableExists = true,
+                        tempRawTableExists = false,
                         hasUnprocessedRecords = false,
                         maxProcessedTimestamp = Optional.empty(),
                     ),
